@@ -1,0 +1,208 @@
+/*#region DEBUG */
+.test {
+  border: 1px dashed red;
+}
+.test2 {
+  border: 1px dashed rgb(0, 30, 255);
+}
+
+.test3 {
+  border: 1px dashed rgb(41, 223, 9);
+}
+
+/*#endregion DEBUG */
+
+/*#region GLOBAL */
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #95ccff;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.background-merge-down {
+  background-image: linear-gradient(to bottom, #000000, #95ccff);
+  background-position: 0 90%, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.background-merge-up {
+  background-image: linear-gradient(to bottom, #95ccff, #000000);
+  background-position: 0 90%, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding-top: 10px;
+}
+/*#endregion GLOBAL */
+/*#region NAVBAR */
+.navbar1 {
+  background-image: linear-gradient(to bottom, #95ccff, #00000000),
+    linear-gradient(to bottom, #00000000, #000000),
+    linear-gradient(to bottom, #00000000, #000000),
+    linear-gradient(to bottom, #95ccff, #002d68);
+  background-position: 0 90%, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 100% 30%, 100% 35%, 100% 100%;
+}
+.background-merge-down-hero {
+  background-image: linear-gradient(to bottom, #000000, #95ccff);
+  background-position: 0 90%, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.logo-text {
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -8px;
+}
+
+.navbar-brand {
+  margin-left: 20%;
+}
+.navbar-nav {
+  margin-left: 45%;
+}
+.nav-link {
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+}
+
+/* #endregion NAVBAR END*/
+/*#region home/HERO*/
+.hero-background {
+  background-image: url(images/hero2.jpg);
+  background-color: #000;
+  background-position: center; /* Ustaw obraz w centrum tła */
+  background-size: cover; /* Rozciągnij obraz na całą szerokość i wysokość */
+  background-repeat: no-repeat;
+}
+.hero-post {
+  background-color: hsla(0, 0%, 100%, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Dodaje cień */
+}
+/*#endregion home/HERO*/
+/*#region home/MECZE*/
+.hr-light {
+  border: none; /* Usuwa domyślną linię */
+  height: 2px; /* Ustawia wysokość linii */
+  background: linear-gradient(
+    to right,
+    #002d68,
+    #6c92b5,
+    #002d68
+  ); /* Gradientowy kolor */
+  border-radius: 2px; /* Zaokrąglone rogi */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Dodaje cień */
+  margin: 15px 0; /* Margines góra-dół */
+}
+/*#endregion home/MECZE*/
+/*#region home/FEATUREDPOSTS*/
+.featuredposts-main-img {
+  background-position: center; /* Ustaw obraz w centrum tła */
+  background-size: cover; /* Rozciągnij obraz na całą szerokość i wysokość */
+  background-repeat: no-repeat;
+}
+.featuredposts-main-text {
+  background-color: hsla(0, 0%, 100%, 1);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Dodaje cień */
+}
+.featuredposts-sec-bck {
+  background-color: #ffffff;
+}
+.featuredposts-sec-img {
+  object-fit: cover;
+  justify-content: center;
+  align-items: center;
+}
+/*#endregion home/FEATUREDPOSTS*/
+/*#region home/SPONSORZY*/
+.sponsor-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sponsor-logo img {
+  padding: 20px 40px;
+  max-width: 90%;
+  transition: 0.3s;
+  opacity: 0.5;
+  filter: grayscale(100);
+}
+
+.sponsor-logo img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+#poznajdruzyne .carousel-item {
+  display: none;
+  transition: transform 0.6s ease-in-out;
+}
+/*#endregion home/SPONSORZY*/
+/*#region home/NASZZESPOL*/
+
+.poznajdruzyne-background {
+  background: #002d68;
+}
+.poznajdruzyne-background2 {
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5), #00000000 70%);
+}
+#poznajdruzyne .carousel-item.active,
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+  display: flex;
+}
+
+#poznajdruzyne .carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+
+#poznajdruzyne .carousel-inner {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#poznajdruzyne .carousel-item > div {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+#poznajdruzyne .zawodnik {
+  background: radial-gradient(
+    circle at center -100px,
+    white 20%,
+    #95ccff 30%,
+    #00000000 120%
+  );
+}
+
+#poznajdruzyne .tytul {
+  padding-top: 7px;
+  font-weight: 700;
+}
+.zawodnik-textfield {
+  position: absolute;
+  top: 80%;
+  left: 5%;
+  background-color: rgba(0, 0, 0, 0.8); /* Czarny z 80% przezroczystością */
+}
+.zawodnik-nazwa {
+  font-weight: 700;
+  font-size: 20px;
+}
+/*#endregion home/NASZZESPOL*/
+
+.form-label {
+  margin-top: 5px;
+}

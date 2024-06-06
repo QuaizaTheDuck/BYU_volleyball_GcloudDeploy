@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<section style="background-color: #002d68">
+  <div class="container p-4">
+    <h1 class="text-white">Contact Us</h1>
+    <div class="row row-cols-2">
+      <div class="col-8">
+        <form method="post">
+          <div class="row">
+            {% csrf_token %}
+
+            <label for="id_name" class="form-label text-white">Name</label>
+            <input type="text" class="form-control" id="id_name" name="name" />
+
+            <label for="id_email" class="form-label text-white">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="id_email"
+              name="email"
+            />
+
+            <label for="id_message" class="form-label text-white"
+              >Message</label
+            >
+            <textarea
+              id="id_message"
+              class="form-control"
+              name="message"
+              style="height: 300px"
+            ></textarea>
+            <div class="col d-flex justify-content-end">
+              <button
+                class="btn btn-light"
+                style="margin-top: 5px"
+                type="submit"
+              >
+                Wyślij
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-4">
+        <h3 class="text-white">Vivamus iaculis dignissim rhoncus.</h3>
+        <p class="text-white">
+          Aliquam posuere erat non lacus sollicitudin varius. In eu arcu
+          sollicitudin, efficitur turpis quis, posuere turpis. Phasellus lacus
+          nisl, tincidunt non dolor eget, aliquet egestas felis. Integer in
+          sapien vestibulum, eleifend est auctor, finibus turpis. Curabitur eget
+          nisl ultrices, pharetra turpis ac, convallis nisl. Nunc quis sagittis
+          mauris. Aenean congue euismod magna, sit amet vehicula lectus tempus
+          nec. Aenean purus sapien, finibus sed magna a, placerat maximus
+          tellus. Pellentesque porta sed quam eget lacinia.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="navbar background-merge-down-hero">
+  <a class="navbar-brand" href="/">
+    <div class="row">
+      <div style="height: 25px"></div>
+    </div>
+  </a>
+</div>
+<div style="min-height: 42vh"></div>
+
+{% endblock %}

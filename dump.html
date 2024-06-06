@@ -1,0 +1,171 @@
+{% comment %}
+<!-- fromularz kontaktowy views -->
+views.py
+def contact_page(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Zapisywanie do bazy
+            contact = ContactEntry.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                message=form.cleaned_data['message']
+            )
+            # Wysyłanie maila
+            send_mail(
+                f"Message from {form.cleaned_data['name']}",
+                form.cleaned_data['message'],
+                form.cleaned_data['email'],
+                ['quaiza.dev@gmail.com'],
+            )
+            return redirect('home_page')
+    else:
+        form = ContactForm()
+    return render(request, 'main/contact.html', {'form': form})
+    
+    {% extends 'base.html' %}
+
+{% block title %}
+Contact
+{% endblock %}
+<!-- fromularz kontaktowy hmtl -->
+{% block content %}
+<div class="container">
+    <h1>Contact Us</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+<!-- Modal trigger button -->
+<button
+  type="button"
+  class="btn btn-primary btn-lg"
+  data-bs-toggle="modal"
+  data-bs-target="#modalId"
+>
+  class ContactEntry(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+
+    def __str__(self):
+        return f"{self.name} - {self.email}"
+</button>
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div
+  class="modal fade"
+  id="modalId"
+  tabindex="-1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">
+          Modal title
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Body</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional: Place to the bottom of scripts -->
+<script>
+  const myModal = new bootstrap.Modal(
+    document.getElementById("modalId"),
+    options,
+  );
+</script>
+
+
+
+
+
+{% if mecze %}
+<div id="mecz-container">
+  <div id="mecz">
+    <p>Data: {{ mecze.0.data }}</p>
+    <p>Godzina: {{ mecze.0.godzina }}</p>
+    <p>Gospodarz: {{ mecze.0.gospodarz }}</p>
+    <p>Przeciwnik: {{ mecze.0.przeciwnik }}</p>
+    <p>Wynik: {{ mecze.0.wynik }}</p>
+  </div>
+</div>
+<button onclick="pokazPoprzedni()">Poprzedni mecz</button>
+<button onclick="pokazNastepny()">Następny mecz</button>
+{% else %}
+<p>Brak zaplanowanych meczów.</p>
+{% endif %} {% comment %}
+<div id="herosection">
+  <div
+    id="carouselExampleIndicators"
+    class="carousel slide"
+    data-ride="carousel"
+  >
+    <ol class="carousel-indicators">
+      <li
+        data-target="#carouselExampleIndicators"
+        data-slide-to="0"
+        class="active"
+      ></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <!-- carousel-item1 -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="{% static 'images/pic.jpg' %}"
+          class="d-block w-100"
+          alt="Second slide"
+        />
+      </div>
+      <!-- carousel-item2 -->
+      <div class="carousel-item">
+        <img
+          src="{% static 'images/pic.jpg' %}"
+          class="d-block w-100"
+          alt="Second slide"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="{% static 'images/pic.jpg' %}"
+          class="d-block w-100"
+          alt="Third slide"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+{% endcomment %}

@@ -1,0 +1,494 @@
+{% extends 'base.html' %} {% load static %} {% block content%}
+<!--#region Hero -->
+<section
+  id="test"
+  class="hero-background"
+  style="{% if featured_post.thumbnail %}background-image: url('{{ featured_post.thumbnail.url }}');{% endif %}"
+>
+  <!-- Jeśli najnowszy featured_post ma thumbnail to te zdjecie jest ustawione jako hero_background -->
+  <div
+    class="container col-xxl-8 px-4 py-5"
+    style="
+      height: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+    "
+  >
+    <div class="row flex-lg-row-reverse align-items-end g-5 py-5 h-100">
+      <div class="col-lg-6 hero-post p-4">
+        <h1 class="display-5 fw-bold lh-1 mb-3">{{ featured_post.title }}</h1>
+        <p class="lead">{{ featured_post.content|truncatechars:200 }}</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          {% include 'main/modal.html' with post=featured_post %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="navbar background-merge-down-hero">
+  <a class="navbar-brand" href="/">
+    <div class="row">
+      <div style="height: 25px"></div>
+    </div>
+  </a>
+</div>
+<!--#endregion Hero END-->
+<!--#region Mecze -->
+<section>
+  <!-- CzarnaRamka -->
+  <div
+    class="container"
+    style="
+      background-color: #000;
+      position: relative;
+      z-index: 2;
+      margin-top: -120px;
+      padding: 15px 15px; /* Padding 15px góra i dół */
+      border-radius: 15px;
+    "
+  >
+    <div class="row no-gutters">
+      <!-- LemaKolumna -->
+      <div class="col-sm-6">
+        <div class="card d-flex" style="background-color: #002d68">
+          <div class="card-body">
+            <h2 class="card-title text-light text-center">Ostatnie mecze</h2>
+            <h6 class="card-subtitle mb-2 text-muted text-center">
+              sezon/liga
+            </h6>
+
+            <div class="container">
+              <ul class="list-group">
+                {% for mecz in ostanieMecze %}
+                <li class="list-group-item" style="background-color: white">
+                  <div class="row flex-nowrap">
+                    <!--#region col lewa -->
+                    <div class="col">
+                      <div
+                        class="row d-flex justify-content-start align-items-center"
+                      >
+                        <img
+                          src="{{ mecz.logo_gospodarza.url }}"
+                          alt="Logo Gospodarza"
+                          class="img-fluid w-50"
+                        />
+                        <h6 style="margin-left: 5px">{{ mecz.gospodarz }}</h6>
+                      </div>
+                    </div>
+                    <div class="col m-auto text-center">
+                      <h4>{{ mecz.wynik }}</h4>
+                    </div>
+
+                    <div class="col">
+                      <div
+                        class="row d-flex justify-content-end align-items-center"
+                      >
+                        <h6 style="margin-right: 5px">{{ mecz.przeciwnik }}</h6>
+                        <img
+                          src="{{ mecz.logo_przeciwnika.url }}"
+                          alt="Logo Gospodarza"
+                          class="img-fluid w-50"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--#endregion col lewa -->
+      <!-- PrawaKolumna -->
+      <div id="mecz" class="col-sm-6">
+        {% if mecze %}
+        <div
+          class="card h-100 d-flex align-content-center"
+          style="background-color: #002d68"
+        >
+          <div class="card-body">
+            <h2 class="card-title text-center text-light">Nadchodzące mecze</h2>
+            <div
+              id="carouselExampleControls"
+              class="carousel slide carousel-fade h-75 d-flex justify-content-center align-items-center"
+              data-ride="carousel"
+              data-interval="false"
+            >
+              <div class="carousel-inner w-100">
+                <div class="carousel-item active">
+                  <!-- Zawartość karuzeli -->
+                  <div class="container">
+                    <hr class="hr-light" />
+                    <div class="row flex-nowrap">
+                      <!-- Data -->
+                      <div class="col col-2 text-center">
+                        <i
+                          class="bi bi-calendar-event-fill"
+                          style="font-size: 2rem; color: white"
+                        ></i>
+                      </div>
+                      <div
+                        class="col d-flex align-items-center justify-content-center"
+                      >
+                        <h4
+                          id="dataMeczu"
+                          class="card-subtitle mb-2 text-muted m-auto"
+                        ></h4>
+                      </div>
+                      <!-- Godzina -->
+                      <div
+                        class="col d-flex align-items-center justify-content-center"
+                      >
+                        <h4
+                          id="godzinaMeczu"
+                          class="card-subtitle mb-2 text-muted m-auto"
+                        ></h4>
+                      </div>
+
+                      <div class="col col-2 d-flex">
+                        <i
+                          class="bi bi-hourglass-split m-auto"
+                          style="font-size: 2rem; color: white"
+                        ></i>
+                      </div>
+                    </div>
+                    <hr class="hr-light" />
+                    <!-- Mecz -->
+                    <div
+                      class="row no-gutters row-cols-5 d-flex flex-nowrap justify-content-center align-items-center"
+                      style="padding-bottom: 10px"
+                    >
+                      <!-- kolumna GospodarzNazwa -->
+                      <div class="col d-none d-md-flex justify-content-end">
+                        <!-- justify-content-end nie działa -->
+                        <h6
+                          class="text-white"
+                          id="gospodarz"
+                          style="margin-right: 5px; text-align: right"
+                        ></h6>
+                      </div>
+                      <!-- kolumna GospodarzLogo -->
+                      <div class="col-3">
+                        <img
+                          id="gospodarzLogo"
+                          src=""
+                          alt="Logo"
+                          class="img-fluid"
+                        />
+                      </div>
+                      <!-- kolumna Wynik -->
+                      <div class="col-md-auto mx-1">
+                        <h2
+                          class="text-white"
+                          style="
+                            font-weight: 900;
+                            font-style: italic;
+                            margin-right: 5px;
+                          "
+                        >
+                          VS
+                        </h2>
+                      </div>
+                      <!-- kolumna PrzeciwnikLogo -->
+                      <div class="col-3">
+                        <img
+                          id="przeciwnikLogo"
+                          src=""
+                          alt="Logo"
+                          class="img-fluid"
+                        />
+                      </div>
+                      <!-- kolumna PrzeciwnikNazwa -->
+                      <div class="col d-none d-md-flex justify-content-start">
+                        <h6
+                          id="przeciwnik"
+                          class="text-white"
+                          style="margin-left: 5px"
+                        ></h6>
+                      </div>
+                    </div>
+                    <hr class="hr-light" style="margin: 5px" />
+                  </div>
+                </div>
+              </div>
+
+              <a
+                class="carousel-control-prev position-absolute"
+                href="#carouselExampleControls"
+                role="button"
+                data-slide="prev"
+                onclick="pokazPoprzedni()"
+                style="left: -9%"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#carouselExampleControls"
+                role="button"
+                data-slide="next"
+                onclick="pokazNastepny()"
+                style="right: -9%"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <p>Brak zaplanowanych meczów.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let indexMeczu = 0;
+    const mecze = JSON.parse("{{ mecze_json|escapejs }}");
+
+    function aktualizujMecz() {
+      // Pobranie danych o meczu
+      const mecz = mecze[indexMeczu].fields;
+
+      // Aktualizacja zawartości HTML dla różnych elementów
+      document.getElementById("dataMeczu").innerText = `${mecz.data}`;
+      document.getElementById("godzinaMeczu").innerText = `${mecz.godzina}`;
+      document.getElementById("gospodarz").innerText = `${mecz.gospodarz}`;
+      document.getElementById(
+        "gospodarzLogo"
+      ).src = `/media/${mecz.logo_gospodarza}`;
+      document.getElementById("przeciwnik").innerText = `${mecz.przeciwnik}`;
+      document.getElementById(
+        "przeciwnikLogo"
+      ).src = `/media/${mecz.logo_przeciwnika}`;
+    }
+    // Formatowanie daty
+    const data = moment(mecz.data).format("DD.MM.YYYY");
+
+    // Formatowanie godziny
+    const godzina = moment(mecz.godzina).format("HH:mm");
+
+    function pokazPoprzedni() {
+      if (indexMeczu > 0) {
+        indexMeczu--;
+        aktualizujMecz();
+      }
+    }
+
+    function pokazNastepny() {
+      if (indexMeczu < mecze.length - 1) {
+        indexMeczu++;
+        aktualizujMecz();
+      }
+    }
+
+    aktualizujMecz();
+  </script>
+</section>
+<!--#endregion Mecze -->
+<!--#region Blog posts -->
+<section>
+  {% if latest_news %}
+  <div class="container">
+    <hr />
+    <!-- main post -->
+    <div
+      class="p-4 p-md-5 mb-4 text-black rounded bg-dark featuredposts-main-img"
+      style="{% if latest_news.0.thumbnail %}background-image: url('{{ latest_news.0.thumbnail.url }}');{% endif %}"
+    >
+      <div class="col-md-6 p-4 featuredposts-main-text">
+        <h1 class="display-5 fst-italic">{{ latest_news.0.title }}</h1>
+        <div class="mb-1 text-muted">Nov 12</div>
+        <p class="lead my-3">{{ latest_news.0.content|truncatechars:200 }}</p>
+        <p class="lead">
+          {% include 'main/modal.html' with post=latest_news.0 %}
+        </p>
+      </div>
+    </div>
+    <hr />
+    <!-- secondary posts -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for post in latest_news|slice:"1:" %}
+      <div class="col">
+        <div class="card shadow-sm">
+          <img
+            class="featuredposts-sec-img"
+            src="{{ post.thumbnail.url }}"
+            alt="Thumbnail"
+            height="250px"
+          />
+          <div class="card-body">
+            <h4 class="mb-0">{{post.title}}</h4>
+            <p class="card-text mb-auto">{{post.content |truncatechars:100}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <button type="button" class="btn btn-link p-0">
+                  <i class="bi bi-hand-thumbs-up-fill"></i>
+                </button>
+              </div>
+              <div class="mx-2">
+                <span>+3</span>
+              </div>
+              <div>
+                <button type="button" class="btn btn-link p-0">
+                  <i class="bi bi-hand-thumbs-down"></i>
+                </button>
+                <button type="button" class="btn btn-link p-0 mx-2">
+                  <i class="bi bi-share"></i>
+                </button>
+              </div>
+              <div class="ml-auto">
+                {% include 'main/modal.html' with post=post %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %} {% endif %}
+</section>
+<!--#endregion Blog posts -->
+<!--#region Nasz zespół -->
+<div class="navbar background-merge-up"></div>
+<section class="poznajdruzyne-background">
+  <div id="poznajdruzyne" class="container" style="padding-bottom: 10px">
+    <div class="row">
+      <div class="col title-section">
+        <h2 class="heading text-white ml-3 tytul">Nasz zespół</h2>
+      </div>
+      <div class="col-1 text-right mr-5">
+        <a
+          class="carousel-control-prev"
+          href="#carouselExampleControls2"
+          role="button"
+          data-slide="prev"
+        >
+          <i
+            class="bi bi-arrow-left-square-fill"
+            style="font-size: 2rem; color: black"
+          ></i>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#carouselExampleControls2"
+          role="button"
+          data-slide="next"
+        >
+          <i
+            class="bi bi-arrow-right-square-fill"
+            style="font-size: 2rem; color: black"
+          ></i>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+    <div id="carouselExampleControls2" class="carousel slide">
+      <div class="carousel-inner poznajdruzyne-background2">
+        <div class="carousel-item active">
+          {% for i in "1234" %}
+          <div class="col">
+            <div class="card zawodnik">
+              <img class="qweqwe" src="{{ zespol.0.zdjecie.url }}" alt="" />
+              <div class="row zawodnik-textfield">
+                <strong class="zawodnik-nazwa text-white"
+                  >{{zespol.0.imienazwisko}}</strong
+                >
+                <strong class="zawodnik-pozycja text-white"
+                  >{{zespol.0.pozycja}}</strong
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="carousel-item">
+          {% for i in "12345678" %}
+          <div class="col">
+            <div class="card zawodnik">
+              <img class="qweqwe" src="{{ zespol.0.zdjecie.url }}" alt="" />
+              <div class="row zawodnik-textfield">
+                <strong class="zawodnik-nazwa text-white"
+                  >{{zespol.0.imienazwisko}}</strong
+                >
+                <strong class="zawodnik-pozycja text-white"
+                  >{{zespol.0.pozycja}}</strong
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="navbar background-merge-down"></div>
+<!--#endregion Nasz zespół -->
+<!--#region Sponsor -->
+<hr />
+<section>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-1.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-2.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-3.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-4.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-5.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-xl-2 col-md-3 col-6 sponsor-logo">
+        <img
+          src="{% static 'images/sponsors/client-6.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</section>
+<hr />
+<!--#endregion Sponsor -->
+
+{% endblock %}

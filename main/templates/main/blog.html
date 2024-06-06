@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %} {% block content%}
+<!--Najnowszy post-->
+<section
+  id="test"
+  class="hero-background"
+  style="{% if posts.0.thumbnail %}background-image: url('{{ posts.0.thumbnail.url }}');{% endif %}"
+>
+  <div
+    class="container col-xxl-8 px-4 py-5"
+    style="
+      height: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+    "
+  >
+    <div class="row align-items-end g-5 py-5 h-100">
+      <div class="col-lg-6 hero-post p-4">
+        <h1 class="display-5 fw-bold lh-1 mb-3">{{ posts.0.title }}</h1>
+        <p class="lead">{{ posts.0.content|truncatechars:200 }}</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          {% include 'main/modal.html' with post=posts.0 %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="navbar background-merge-down-hero">
+  <a class="navbar-brand" href="/">
+    <div class="row">
+      <div style="height: 25px"></div>
+    </div>
+  </a>
+</div>
+
+<!--Pozostałe post-->
+<div class="container py-4" style="margin-top: -45px">
+  <div class="row gx-4">
+    {% for post in posts|slice:"1:" %}
+    <div class="col-lg-6 pb-4">
+      <div class="card" style="box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3)">
+        <img
+          class="featuredposts-sec-img"
+          src="{{ post.thumbnail.url }}"
+          alt="Thumbnail"
+          height="300px"
+        />
+        <div class="card-body">
+          <h4 class="mb-0">{{post.title}}</h4>
+          <p class="card-text mb-auto">{{post.content |truncatechars:100}}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <button type="button" class="btn btn-link p-0">
+                <i class="bi bi-hand-thumbs-up-fill"></i>
+              </button>
+            </div>
+            <div class="mx-2">
+              <span>+3</span>
+            </div>
+            <div>
+              <button type="button" class="btn btn-link p-0">
+                <i class="bi bi-hand-thumbs-down"></i>
+              </button>
+              <button type="button" class="btn btn-link p-0 mx-2">
+                <i class="bi bi-share"></i>
+              </button>
+            </div>
+            <div class="ml-auto">
+              {% include 'main/modal.html' with post=post %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% endblock %}
