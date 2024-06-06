@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-p0%-3om_)bmd@@bvbo)lz8l!qyu(sr=2y8-k4g600678489pb9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.118.32.147']
 
 
 # Application definition
@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myprojectdb',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'olecko2',
+        'NAME': 'db',
+        'USER': 'Quaiza',
+        'PASSWORD': 'olecko123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
