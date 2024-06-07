@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-p0%-3om_)bmd@@bvbo)lz8l!qyu(sr=2y8-k4g600678489pb9
 DEBUG = True
 
 ALLOWED_HOSTS = ['34.0.247.77']
-
+""" LOCAL_SET
+ALLOWED_HOSTS = ['127.0.0.1'] """
 
 # Application definition
 
@@ -86,6 +87,19 @@ DATABASES = {
     }
 }
 
+""" LOCAL_DB_SETTIGNS """
+
+""" DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'myprojectdb',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'olecko2',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+} """
+
 
 
 
@@ -124,6 +138,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/main/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'main', 'static'),
 ]

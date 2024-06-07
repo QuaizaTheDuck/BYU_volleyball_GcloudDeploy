@@ -66,14 +66,16 @@
                     <!--#region col lewa -->
                     <div class="col">
                       <div
-                        class="row d-flex justify-content-start align-items-center"
+                        class="row d-flex flex-nowrap justify-content-start align-items-center"
                       >
                         <img
                           src="{{ mecz.logo_gospodarza.url }}"
                           alt="Logo Gospodarza"
                           class="img-fluid w-50"
                         />
-                        <h6 style="margin-left: 5px">{{ mecz.gospodarz }}</h6>
+                        {% comment %} {{ mecz.gospodarz }} {% endcomment %}
+
+                        <h6 style="margin-left: 5px">Resovia Rzeszów</h6>
                       </div>
                     </div>
                     <div class="col m-auto text-center">
@@ -82,9 +84,15 @@
 
                     <div class="col">
                       <div
-                        class="row d-flex justify-content-end align-items-center"
+                        class="row d-flex flex-nowrap justify-content-end align-items-center"
                       >
-                        <h6 style="margin-right: 5px">{{ mecz.przeciwnik }}</h6>
+                        {% comment %} {{ mecz.przeciwnik }} {% endcomment %}
+                        <h6
+                          class="d-flex"
+                          style="margin-right: 5px; flex: 1; text-align: right"
+                        >
+                          Indykpol AZS Olsztyn
+                        </h6>
                         <img
                           src="{{ mecz.logo_przeciwnika.url }}"
                           alt="Logo Gospodarza"
